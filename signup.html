@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <script>
+    if (window.location.hostname !== 'localhost' || window.location.port !== '3000') {
+      window.location.href = 'http://localhost:3000' + window.location.pathname;
+    }
+  </script>
+  <main>
+    <h1>Daftar (Sign Up)</h1>
+    <form id="signup-form">
+      <label>Nama<br><input type="text" name="name" required></label><br>
+      <label>Email<br><input type="email" name="email" required></label><br>
+      <label>Password<br><input type="password" name="password" required></label><br>
+      <label>Admin Code (opsional)<br><input type="password" name="adminCode" placeholder="Kode undangan admin"></label><br>
+      <button type="submit">Daftar</button>
+    </form>
+    <div id="msg"></div>
+    <p>Sudah punya akun? <a href="http://localhost:3000/signin.html">Login</a></p>
+  </main>
+
+  <script>
+    const form = document.getElementById('signup-form');
+    const msg = document.getElementById('msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch('http://localhost:3000/api/signup', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+        const text = await res.text();
+        if (res.ok) {
+          msg.textContent = 'Berhasil daftar.';
+          form.reset();
+          setTimeout(() => { window.location.href = 'http://localhost:3000/Index.html'; }, 700);
+        } else {
+          msg.textContent = text;
+        }
+      } catch (err) {
+        msg.textContent = 'Tidak dapat terkoneksi ke server. Pastikan server dijalankan dan buka halaman lewat http://localhost:3000/signup.html';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
+
