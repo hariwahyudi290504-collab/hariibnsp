@@ -70,6 +70,11 @@ app.get('/admin.html', authenticateToken, requireAdmin, (req, res) => {
 
 app.use(express.static(path.join(__dirname)));
 
+// Serve root path to index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 const JWT_SECRET = process.env.JWT_SECRET || 'change_this_in_production';
 
 function getTokenFromRequest(req) {

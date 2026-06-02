@@ -40,7 +40,7 @@
         });
         if (res.ok) {
           msg.textContent = 'Login sukses.';
-          setTimeout(() => { window.location.href = 'http://localhost:3000/Index.html'; }, 700);
+          setTimeout(() => { window.location.href = 'http://localhost:3000/'; }, 700);
         } else {
           const text = await res.text();
           msg.textContent = text;
