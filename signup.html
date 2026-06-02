@@ -11,11 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <script>
-    if (window.location.hostname !== 'localhost' || window.location.port !== '3000') {
-      window.location.href = 'http://localhost:3000' + window.location.pathname;
-    }
-  </script>
   <main>
     <h1>Daftar (Sign Up)</h1>
     <form id="signup-form">
@@ -26,7 +21,7 @@
       <button type="submit">Daftar</button>
     </form>
     <div id="msg"></div>
-    <p>Sudah punya akun? <a href="http://localhost:3000/signin.html">Login</a></p>
+    <p>Sudah punya akun? <a href="/signin.html">Login</a></p>
   </main>
 
   <script>
@@ -36,7 +31,7 @@
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
       try {
-        const res = await fetch('http://localhost:3000/api/signup', {
+        const res = await fetch('/api/signup', {
           method: 'POST', headers: {'Content-Type':'application/json'},
           body: JSON.stringify(data)
         });
@@ -44,12 +39,12 @@
         if (res.ok) {
           msg.textContent = 'Berhasil daftar.';
           form.reset();
-          setTimeout(() => { window.location.href = 'http://localhost:3000/'; }, 700);
+          setTimeout(() => { window.location.href = '/'; }, 700);
         } else {
           msg.textContent = text;
         }
       } catch (err) {
-        msg.textContent = 'Tidak dapat terkoneksi ke server. Pastikan server dijalankan dan buka halaman lewat http://localhost:3000/signup.html';
+        msg.textContent = 'Tidak dapat terkoneksi ke server.';
         console.error(err);
       }
     });
